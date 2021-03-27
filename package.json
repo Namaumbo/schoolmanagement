@@ -1,11 +1,10 @@
 {
-  "name": "hospital-management-system-api",
+  "name": "School-management-system-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "nodemon MyApp.js"
   },
   "keywords": [],
   "author": "",

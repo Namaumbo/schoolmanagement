@@ -5,17 +5,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('students', {
       
-        studentId:{
+        id:{
         type: DataTypes.INTEGER,
         primaryKey : true,
         allowNull : false
   
        },
-      studentName: {
-        type: DataTypes.STRING,
-        allowNull:false
-
-      },
       firstName:{
         type:DataTypes.STRING,
         allowNull:false

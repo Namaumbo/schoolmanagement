@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "daelo6!",
-    "database": "schoolDatabase",
+    "database": "school_management",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
