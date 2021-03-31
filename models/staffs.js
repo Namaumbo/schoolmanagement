@@ -1,41 +1,59 @@
 'use strict';
-const {Model} = require('sequelize');
-const {DataTypes} = require('sequelize')
+const Sequelize = require('sequelize');
+const { DataTypes } = require('sequelize');
+const connection = require("../dbConnection");
 
-module.exports = (sequelize, DataTypes) => {
-  class staffs extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  staffs.init(
-    {
-    staffName:{
-      type: DataTypes.STRING
-    },
-    gender:{
-      type:DataTypes.STRING
-    },
-    email:{
-      type:DataTypes.STRING
-    },
-    phoneNumber:{
-      type:DataTypes.STRING
-    },
-    dateOfBirth:{
-      type:DataTypes.DATE,
-      allowNull:true
-    },
+const staff = connection.define('staff', {
+id:{
+  type: DataTypes.INTEGER,
+  primaryKey: true,
+  autoIncrement:true,
+  allowNull:false
+},
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
-  {
-    sequelize,
-    tableName:'staffs',
-    modelName: 'staffs',
-  });
-  return staffs;
-};
+  lastName: {
+    type: DataTypes.STRING,
+  },
+  gender:{
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email:{
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique:true,
+    validate:{
+      min:4,
+      max:90,
+      isEmail:true
+    }
+  },
+  phoneNumber:{
+     type:DataTypes.STRING,
+     allowNull:false,
+     validate:{
+        min:8
+     } 
+  },
+  dateOfBirth:{
+      type:DataTypes.DATE,
+      allowNull:false
+  },
+  password:{
+      type:DataTypes.STRING,
+      allowNull:false,
+      validate:{
+          min:5
+      }
+  }
+
+},
+
+{
+  timestamps:true
+});
+module.exports = staff
+

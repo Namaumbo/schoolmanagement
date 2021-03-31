@@ -6,11 +6,16 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('staffs', {
       id: {
-        allowNull: false,
+        // allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER
       },
-      staffName: {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull:false
+      },
+      lastName: {
         type: DataTypes.STRING,
         allowNull:false
       },
@@ -21,12 +26,17 @@ module.exports = {
       email: {
         type: DataTypes.STRING,
         allowNull:false,
+        unique:true
       },
       dateOfBirth:{
       type:DataTypes.DATE,
       allowNull:false
       },
       phoneNumber:{
+        type:DataTypes.STRING,
+        allowNull:true
+      },
+      password:{
         type:DataTypes.STRING,
         allowNull:true
       },

@@ -8,7 +8,8 @@ module.exports = {
         id:{
         type: DataTypes.INTEGER,
         primaryKey : true,
-        allowNull : false
+        allowNull : false,
+        autoIncrement:true,
   
        },
       firstName:{
@@ -26,6 +27,10 @@ module.exports = {
        perfomanceTrend:{
          type:DataTypes.JSON,
          allowNull:false
+       },
+       dateOfBirth:{
+        type:DataTypes.DATE,
+        allowNull : false
        },
        studentResults:{
         type:DataTypes.JSON,

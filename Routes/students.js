@@ -1,43 +1,18 @@
 const express = require('express');
+
+
+const student = require('../controllers/studentController')
+
 const router= express.Router();
         // student router
-        router.get('/',(req, res) => {
-        res.send('hello from students')
-        });
-
-        // adding a student
-        router.post('/add-student',(req,res)=>{
-            res.send('student added successfully')
-        })
-
+        
+        router.get('/',student.getAllStudents);
+        // // adding a studetn
+        router.post('/add-student',student.addStudent)
         // editing a student
-        router.put('/edit-student/:id',(req,res)=>{
-  
-            const studentId = req.params.id
-
-            if(!studentId){
-               res.json({
-                   "message":"sorry we have no such student",
-                   "status":"401"
-               },401)
-            }
-
-            res.send('student edited successfully')
-        })
-        // deleting a student
-        router.delete('/delete-student',(req,res)=>{
-            res.send('student deleted successfully')
-        })
-        // student info
-        router.get('/get-student-info/:id',(req,res)=>{
-            const studentId = req.params.id
-            if(!studentId){
-                res.json({
-                    "message":"we have no such student",
-                    "status":"401"
-                },401)
-            }
-
-            res.send("student's information")
-        })
+        router.put('/edit-student/:id',student.updateAStudent)
+        // // deleting a student
+        router.delete('/delete-student/:id',student.deleteAStudent)
+        // // studnet info
+        router.get('/get-student-info/:id',student.getAStudent)
 module.exports = router

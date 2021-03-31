@@ -27,11 +27,8 @@ app.use('/staff',require('./Routes/staff'))
 
 
 
-
-
-// app.get('/',(req, res)=>{
-// res.json({"message":"it is working somehow"},200)
-// })
+const db = require("./models");
+db.sequelize.sync();
 
 app.listen(5000,()=>{
     console.log("your app is running on port 5000")
