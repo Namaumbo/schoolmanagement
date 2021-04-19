@@ -25,6 +25,10 @@ app.use('/students',require('./Routes/students'));
 //staffs Routes
 app.use('/staff',require('./Routes/staff'))
 
+// subject routes
+app.use('/subjects',require('./Routes/subject'))
+
+
 
 
 const db = require("./models");

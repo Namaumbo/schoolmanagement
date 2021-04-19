@@ -18,8 +18,20 @@ exports.addStaff = async (req, res, next) => {
     try {
 
         //check for existence
-    
-
+        const existenceStaff = await require('../models/staffs').findOne({
+            where:{
+                email,
+                firstName,
+                lastName
+            }
+        })
+        if(existenceStaff){
+            res.json({
+                "message":"Staff already exists",
+                "staff":existenceStaff
+            })
+        }
+       else{
         const staff = await  require("../models/staffs.js").create({ 
             firstName,
             lastName,
@@ -34,6 +46,7 @@ exports.addStaff = async (req, res, next) => {
             "details":staff
         })
     }
+ }
     catch (error) {
         return res.status(500).json({"message":error.message})
     }
@@ -62,9 +75,9 @@ exports.getAstaff = (req,res,next)=>{
             "detail":{}
         })
     }
-    if(!id){
+    if(id == null){
         res.status(401).json({
-            "message":"There is no such user with such name",
+            "message":"no user chosen",
             "detail":{}
         })
     }

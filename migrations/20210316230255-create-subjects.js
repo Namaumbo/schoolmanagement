@@ -7,7 +7,8 @@ module.exports = {
       subjectId: {
         type:DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true   
+        primaryKey: true ,
+        autoIncrement:true 
       },
       subjectName:{
        type:DataTypes.STRING,
@@ -22,7 +23,7 @@ module.exports = {
             allowNull:false
       },
       teachersOnDuty:{
-        type:DataTypes.STRING,
+        type:DataTypes.ARRAY(DataTypes.STRING),
         allowNull:false
       },
       createdAt: {

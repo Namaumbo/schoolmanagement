@@ -26,6 +26,7 @@ id:{
   },
   address:{
      type:DataTypes.STRING,
+      unique:true
    
   },
   dateOfBirth:{

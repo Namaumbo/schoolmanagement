@@ -1,11 +1,22 @@
 'use strict'
 
-const { response } = require("express")
+const { response } = require("express");
+const { Op } = require("sequelize");
 
 // getting all students
 exports.getAllStudents = async (req, res, next) => {
 
-const allStudents = require('../models/students.js').findAll();
+const allStudents =  require('../models/students.js').findAll({
+  
+       attributes:[
+        "firstName",
+        "lastName",
+        "sex", 
+        "dateOfBirth", 
+        "address"
+    ]
+
+});
 
 allStudents.then(response=>{
     if(response){
@@ -40,7 +51,7 @@ exports.getAStudent = (req,res,next)=>{
             "detail":{}
         })
     }
-    if(!id){
+    if(id === null){
         res.status(401).json({
             "message":"There is no such user with such name",
             "detail":{}
@@ -70,11 +81,22 @@ exports.addStudent = async (req, res, next) => {
         studentResults
          } = req.body
 
-    try {
 
-        //check for existence
+      //checking existsense and saving
+      
+       const existenceStudent = await require('../models/students').findOne({ where :{
+           firstName,
+           lastName
+       }})
     
-        const student= await  require("../models/students").create({ 
+      if(existenceStudent){
+          res.status(300).json({
+              "message":"student already in the database",
+              "student":existenceStudent
+          })
+      }
+      else{
+           await require("../models/students").create({ 
             firstName,
             lastName,
             sex, 
@@ -83,15 +105,19 @@ exports.addStudent = async (req, res, next) => {
             address,
             studentResults
         })
+         .then(response=>{
             res.status(201).json({
-            "message":"student added successfully",
-            "details":student
-        })
-    }
-    catch (error) {
-        console.log(error)
-        return res.status(500).json({"message":error.message})
-}
+                "message":"student added successfully",
+                "details":response
+            })
+            console.log(response)
+          })
+          .catch(error=>{
+            console.log(error)
+            return res.status(500).json({"message":error.message})
+          }) 
+        }
+             
 }
 //updating a student
 
