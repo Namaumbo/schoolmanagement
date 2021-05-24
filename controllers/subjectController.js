@@ -1,6 +1,6 @@
-'use strict'
+    'use strict'
 
-// const { is } = require('sequelize/types/lib/operators');
+    // const { is } = require('sequelize/types/lib/operators');
 
 exports.getAllSubject = async (req, res, next) => {
 
@@ -114,8 +114,10 @@ exports.getASubject = (req,res,next)=>{
 
 exports.updateASubject =  (req,res,next)=>{
     const subjectId = req.params.id;
-    const subject = require("../models/subjects.js").update(req.body,{ where:{subjectId}})
-        subject.then(response => {
+    const subject = require("../models/subjects.js").update(req.body,
+    { where:{subjectId}})
+        subject.then(  response =>
+             {
             if(response == 1){
             res.status(200).json({
                 "message":"subject updated successfully",

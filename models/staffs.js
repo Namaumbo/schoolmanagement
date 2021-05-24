@@ -2,6 +2,7 @@
 const Sequelize = require('sequelize');
 const { DataTypes } = require('sequelize');
 const connection = require("../dbConnection");
+const hash = require('sequelize')
 
 const staff = connection.define('staff', {
 id:{
@@ -46,8 +47,9 @@ id:{
       type:DataTypes.STRING,
       allowNull:false,
       validate:{
-          min:5
+          min:4
       }
+      
   }
 
 },

@@ -24,18 +24,16 @@ module.exports = {
          type:DataTypes.STRING,
          allowNull:false
        },
-       perfomanceTrend:{
-         type:DataTypes.JSON,
-         allowNull:false
-       },
+     
        dateOfBirth:{
         type:DataTypes.DATE,
         allowNull : false
        },
-       studentResults:{
-        type:DataTypes.JSON,
-       allowNull : false
-       },
+       isRegisteredStudent:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue:false
+      },
        address:{
          type:DataTypes.STRING,
          allowNull:false

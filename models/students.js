@@ -20,21 +20,16 @@ id:{
     type: DataTypes.STRING,
  
   },
-  perfomanceTrend:{
-    type: DataTypes.JSON,
-
-  },
+ 
   address:{
      type:DataTypes.STRING,
-      unique:true
-   
   },
   dateOfBirth:{
       type:DataTypes.DATE, 
   },
-  studentResults:{
-    type: DataTypes.JSON,
-    
+  isRegisteredStudent:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:false
   }
 },
 
