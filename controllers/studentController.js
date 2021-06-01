@@ -8,7 +8,7 @@ const {
 } = require("sequelize");
 
 // getting all students
-exports.getAllStudents = async (req, res, next) => {
+exports.getAllStudents = async (req, res) => {
 
     const allStudents = require('../models/students.js').findAll({
 
@@ -21,6 +21,14 @@ exports.getAllStudents = async (req, res, next) => {
         ]
 
     });
+    
+
+    if((await allStudents).length==0){
+        res.status(409).json({
+            "message":"Opps there is no student currently",
+        })
+        return false;
+    }
 
     allStudents.then(response => {
         if (response) {
@@ -42,7 +50,9 @@ exports.getAllStudents = async (req, res, next) => {
 
 }
 
+// *******************************
 //getting a single student
+// *********************************
 exports.getAStudent = (req, res, next) => {
     const id = req.params.id;
 
@@ -66,14 +76,17 @@ exports.getAStudent = (req, res, next) => {
         })
 
     }).catch(
-        next(Error)
+          
     )
 
-
 }
+// *************************
 
 // adding a student
-exports.addStudent = async (req, res, next) => {
+
+// ***********************
+
+exports.addStudent = async (req, res) => {
 
     //object holding the request body
     const {
@@ -94,7 +107,6 @@ exports.addStudent = async (req, res, next) => {
             lastName
         }
     })
-
     if (existenceStudent) {
         res.status(409).json({
             "message": "student already in the database",
@@ -107,14 +119,15 @@ exports.addStudent = async (req, res, next) => {
                     sex,
                     dateOfBirth,
                     address,
+                    isRegisteredStudent
                 }
 
             )
+            
             .then(response => {
                 res.status(201).json({
                     "message": "student added successfully",
                     "details": response,
-
                 })
             })
             .catch(error => {
@@ -124,7 +137,6 @@ exports.addStudent = async (req, res, next) => {
                 })
             })
     }
-
 }
 //updating a student
 

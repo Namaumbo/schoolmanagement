@@ -1,16 +1,20 @@
 
 const student = require('./students')
 const subject = require('./subjects')
+// const 
 
 const databaseConnection = require("../dbConnection");
-const studentSubject = databaseConnection.define('student_and_subject', {
+ const studentSubject = databaseConnection.define('student_and_subject', {
 
 })
 
-// student.hasMany(subject)
-// subject.belongsToMany(student)
+
+//relationships m:n
+student.belongsToMany(subject,{through:'student_and_subjects' })
+subject.belongsToMany(student,{through:'student_and_subjects'})
 
 databaseConnection.authenticate()
 databaseConnection.sync({
   force:true
 })
+exports.modules = studentSubject
