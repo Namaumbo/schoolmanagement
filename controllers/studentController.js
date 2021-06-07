@@ -4,14 +4,13 @@ const {
     response
 } = require("express");
 const {
-    Op
+    Op, where
 } = require("sequelize");
 
 // getting all students
 exports.getAllStudents = async (req, res) => {
 
     const allStudents = require('../models/students.js').findAll({
-
         attributes: [
             "firstName",
             "lastName",
@@ -21,8 +20,6 @@ exports.getAllStudents = async (req, res) => {
         ]
 
     });
-    
-
     if((await allStudents).length==0){
         res.status(409).json({
             "message":"Opps there is no student currently",
@@ -81,9 +78,7 @@ exports.getAStudent = (req, res, next) => {
 
 }
 // *************************
-
 // adding a student
-
 // ***********************
 
 exports.addStudent = async (req, res) => {
@@ -197,4 +192,57 @@ exports.deleteAStudent = (req, res, next) => {
         })
     })
 
+}
+
+// **********************************
+//adding subjects to students
+// **********************************
+
+exports.subjects_to_students = async (req,res)=>{
+
+    const id = req.params.id
+
+   const student =  require("../models/students").findOne({
+       where: {id}
+   })
+//    const subject = require("../models/subjects").findOne({
+//         where: {id}
+//         })
+   if((await student).length==0){
+       res.status(409).json({
+           "message": "You have no students \n please add a student first"
+       })
+   }
+   else if(student == null){
+        res.status(401).json({
+            "message": "check the name and try again"
+        })
+
+   }
+   else{
+       // if student exists
+       if(res.status === 200 && student){
+         if((await subject).length == 0){
+             res.status(409).json({
+                 "message": "you have no subject \n please add a subject first"
+             })
+         }
+         else if(subject==null){
+             res.status(401).json({
+                 "message":"check the subject name and try again"
+             })
+         }
+         else{
+            //  if student and subject exist
+            
+       try {
+
+    } catch (error) {
+        res.status(500).json(error)
+    }
+         }
+
+       }
+
+   }
 }

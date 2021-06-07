@@ -15,4 +15,7 @@ const router= express.Router();
         router.delete('/delete-student/:id',student.deleteAStudent)
         // // studnet info
         router.get('/get-student-info/:id',student.getAStudent)
+        // // adding subject to students
+        router.post('/')
+
 module.exports = router

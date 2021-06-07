@@ -1,11 +1,20 @@
 
 const student = require('./students')
 const subject = require('./subjects')
+const DataTypes = require('sequelize')
 // const 
 
 const databaseConnection = require("../dbConnection");
  const studentSubject = databaseConnection.define('student_and_subject', {
 
+  studentId : {
+    allowNull : true,
+    type:DataTypes.INTEGER,
+  },
+  subjectId:{
+    allowNull : true,
+    type:DataTypes.INTEGER
+  }
 })
 
 

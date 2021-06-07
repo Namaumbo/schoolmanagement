@@ -55,7 +55,6 @@ exports.addSubject = async (req, res, next) => {
         //check for existence
         const existenceSubject = await require('../models/subjects.js').findOne({
             where:{
-                
                 subjectName
             }
         })
