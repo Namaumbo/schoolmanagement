@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": "daelo6!",
-    "database": "school_management",
+    "username": "daelo",
+    "password": "spikker",
+    "database": "school_management_system",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

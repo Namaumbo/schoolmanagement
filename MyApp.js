@@ -34,6 +34,8 @@ app.use('/subjects',require('./Routes/subject'))
 const db = require("./models");
 db.sequelize.sync();
 
-app.listen(5000,()=>{
+
+
+app.listen(process.env.port || 5000,()=>{
     console.log("your app is running on port 5000")
 })

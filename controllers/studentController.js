@@ -108,16 +108,7 @@ exports.addStudent = async (req, res) => {
             "student": existenceStudent
         })
     } else {
-        await require("../models/students").create({
-                    firstName,
-                    lastName,
-                    sex,
-                    dateOfBirth,
-                    address,
-                    isRegisteredStudent
-                }
-
-            )
+        await require("../models/students").create(req.body)
             
             .then(response => {
                 res.status(201).json({

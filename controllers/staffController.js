@@ -57,7 +57,7 @@ exports.addStaff = async (req, res, next) => {
 }
 
 // getting all the staffs
-exports.getAllStaffs = (req, res, next) => {
+exports.getAllStaffs = async (req, res, next) => {
     const allStaffs = require('../models/staffs').findAll({
         attributes: [
             "firstName",

@@ -6,6 +6,6 @@ const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USER_NAME, 
     dialect: 'postgres'
   });
 
-  //connection.sync({force:true})
+  // connection.sync({force:true})
 
   module.exports = connection
