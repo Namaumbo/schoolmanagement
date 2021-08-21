@@ -12,6 +12,11 @@ module.exports = {
         autoIncrement:true,
   
        },
+       registrationNumber:{
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull:false
+       },
       firstName:{
         type:DataTypes.STRING,
         allowNull:false

@@ -10,6 +10,7 @@ exports.getAllSubject = async (req, res, next) => {
       "category",
       "creditHours",
       "teachersOnDuty",
+      "subjectCode",
     ],
   });
 

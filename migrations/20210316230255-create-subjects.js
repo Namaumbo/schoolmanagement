@@ -10,6 +10,11 @@ module.exports = {
         primaryKey: true ,
         autoIncrement:true 
       },
+      subjectCode:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique:true
+      },
       subjectName:{
        type:DataTypes.STRING,
        allowNull:false

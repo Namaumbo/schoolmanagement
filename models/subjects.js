@@ -15,6 +15,12 @@ const subject = connection.define('subjects', {
       type: DataTypes.STRING,
 
     },
+    subjectCode:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique:true
+    },
+  
     category: {
       type: DataTypes.STRING,
     },
