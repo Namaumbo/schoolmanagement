@@ -1,10 +1,13 @@
 "use strict";
 const { response } = require("express");
-const { Op, where } = require("sequelize");
+const { Op, where, json } = require("sequelize");
+
+const Stundent = require("../models/students");
+const Subject = require("../models/subjects");
 
 // getting all students
 exports.getAllStudents = async (req, res) => {
-  const allStudents = require("../models/students.js").findAll({
+  const allStudents = Stundent.findAll({
     attributes: ["firstName", "lastName", "sex", "dateOfBirth", "address"],
   });
   if ((await allStudents).length == 0) {
@@ -40,7 +43,13 @@ exports.getAllStudents = async (req, res) => {
 exports.getAStudent = (req, res, next) => {
   const id = req.params.id;
 
-  const aStudent = require("../models/students.js").findByPk(id);
+  const aStudent = Stundent.findOne({
+     where:{id} ,
+    attributes: ["id","firstName","lastName"],
+    include:{
+      model: Subject,
+    },
+  });
   aStudent
     .then((response) => {
       if (!response) {
@@ -49,7 +58,7 @@ exports.getAStudent = (req, res, next) => {
           detail: {},
         });
       }
-      if (id === null) {
+      if (aStudent === null) {
         res.status(401).json({
           message: "There is no such user with such name",
           detail: {},
@@ -79,7 +88,7 @@ exports.addStudent = async (req, res) => {
 
   //checking existsense and saving
 
-  const existenceStudent = await require("../models/students").findOne({
+  const existenceStudent = await Stundent.findOne({
     where: {
       firstName,
       lastName,
@@ -112,7 +121,7 @@ exports.addStudent = async (req, res) => {
 
 exports.updateAStudent = (req, res, next) => {
   const id = req.params.id;
-  const student = require("../models/students.js").update(req.body, {
+  const student = Stundent.update(req.body, {
     where: {
       id,
     },
@@ -143,7 +152,7 @@ exports.updateAStudent = (req, res, next) => {
 exports.deleteAStudent = (req, res, next) => {
   const id = req.params.id;
 
-  const deleteStudent = require("../models/students.js").destroy({
+  const deleteStudent = Stundent.destroy({
     where: {
       id,
     },
@@ -172,40 +181,45 @@ exports.deleteAStudent = (req, res, next) => {
 exports.add_subject_to_student = async (req, res) => {
   const id = req.params.id;
 
-  const student = require("../models/students").findByPk(id);
+  const aStudent = await Stundent.findByPk(id);
 
-  if ((await student.length) === 0) {
-    res.status(404).send("no student");
-  } else if (student == null) {
-    res.status(404).send("no such student again");
-  } else {
-      
-  
-      req.body.subjectCode.forEach(async (subjectCode) => {
-      const available_subject = await require("../models/subjects").findOne({
-        where: {
-          subjectCode,
-        },
+  if (aStudent) {
+    req.body.subjectCode.forEach(async (subject) => {
+      const foundSubject = await Subject.findOne({
+        where: { subjectCode: subject },
       });
-      
-       
-        available_subject.subjectCode .then((response) => {
-            if (available_subject) {
 
-              res.status(200).send(response);
-            } else {
-              console.error("we cant find anything");
-            }
-          })
-          .catch((err) => {
-            console.error(err.message);
+      if (foundSubject) {
+        await aStudent.addSubject(foundSubject);
+        res
+          .status(201)
+          .json({
+            message: "succefully saved the subjects",
+            details: aStudent,
           });
-        
-
-    })
-   
+      } else {
+        (error) => {
+          res.send(error);
+        };
+      }
+    });
+  } else if (aStudent == null) {
+    res.status(409).send("misala");
   }
 };
+
+// req.body.subjectCode.forEach(async (subjectCode) => {
+
+// const subject = await Subject.findOne({ where: {subjectCode }});
+
+// res.send(subject)
+//  subject.then(i=>{console.log(i)}).catch(error => {console.log(error)})
+// if (subject) {
+//   student.addSubject(subject);
+//   res.status(200).send("ok");
+// } else {
+//   console.error("we cant find anything");
+// }
 
 // **********************************
 //adding subjects to students
