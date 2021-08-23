@@ -28,10 +28,6 @@ module.exports = {
             type:DataTypes.INTEGER,
             allowNull:false
       },
-      teachersOnDuty:{
-        type:DataTypes.ARRAY(DataTypes.STRING),
-        allowNull:false
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

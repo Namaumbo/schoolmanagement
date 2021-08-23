@@ -9,7 +9,6 @@ exports.getAllSubject = async (req, res, next) => {
       "subjectName",
       "category",
       "creditHours",
-      "teachersOnDuty",
       "subjectCode",
     ],
   });
@@ -73,9 +72,8 @@ exports.getASubject = (req, res, next) => {
   aSubject
     .then((response) => {
       if (!response) {
-        res.status(401).json({
+        res.status(404).json({
           message: "There is no such subject",
-          detail: {},
         });
       }
       res.status(200).json({

@@ -1,5 +1,6 @@
 "use strict";
 const { response } = require("express");
+const { boolean } = require("joi");
 const { Op, where, json } = require("sequelize");
 
 const Stundent = require("../models/students");
@@ -48,6 +49,7 @@ exports.getAStudent = (req, res, next) => {
     attributes: ["id","firstName","lastName"],
     include:{
       model: Subject,
+      attributes: ["subjectId","subjectName","subjectCode",]
     },
   });
   aStudent
@@ -55,18 +57,43 @@ exports.getAStudent = (req, res, next) => {
       if (!response) {
         res.status(401).json({
           message: "There is no such student",
-          detail: {},
         });
       }
       if (aStudent === null) {
         res.status(401).json({
           message: "There is no such user with such name",
-          detail: {},
         });
       }
+
+      let sub = []
+    //  response.student.subjects.forEach(subject =>{
+    //   const subs  = {
+    //      subjectId : subject.subjectId,
+    //      subjectName : subject.subjectName,
+    //      subjectCode : subject.subjectCode,
+    //   }
+    //   sub.push(subs)
+    //  });
+    let subArray = []
+    response.subjects.forEach(subject =>{
+      const sub = {
+        subId : subject.subjectId,
+        subjectName:subject.subjectName,
+        subjectCode:subject.subjectCode,
+      }
+      subArray.push(sub)
+    })
+
+    const studentDto ={
+      id:response.id,
+      firstName : response.firstName,
+      lastName : response.lastName,
+      subjects : subArray
+    }
+  
       res.status(200).json({
         message: "student available",
-        details: response,
+        details: studentDto,
       });
     })
     .catch();
@@ -178,90 +205,23 @@ exports.deleteAStudent = (req, res, next) => {
     });
 };
 
+
+
+
 exports.add_subject_to_student = async (req, res) => {
   const id = req.params.id;
-
+  
   const aStudent = await Stundent.findByPk(id);
 
   if (aStudent) {
-    req.body.subjectCode.forEach(async (subject) => {
       const foundSubject = await Subject.findOne({
-        where: { subjectCode: subject },
+        where: { subjectCode:req.body.subjectCode },
       });
-
       if (foundSubject) {
         await aStudent.addSubject(foundSubject);
-        res
-          .status(201)
-          .json({
-            message: "succefully saved the subjects",
-            details: aStudent,
-          });
+        res.send("done")
       } else {
-        (error) => {
-          res.send(error);
-        };
+      res.send()
       }
-    });
-  } else if (aStudent == null) {
-    res.status(409).send("misala");
-  }
 };
-
-// req.body.subjectCode.forEach(async (subjectCode) => {
-
-// const subject = await Subject.findOne({ where: {subjectCode }});
-
-// res.send(subject)
-//  subject.then(i=>{console.log(i)}).catch(error => {console.log(error)})
-// if (subject) {
-//   student.addSubject(subject);
-//   res.status(200).send("ok");
-// } else {
-//   console.error("we cant find anything");
-// }
-
-// **********************************
-//adding subjects to students
-// **********************************
-
-// exports.add_subject_to_student = async (registrationNumber, subjectCode) => {
-//   const student = await require("../models/students").findOne({
-//     where: { registrationNumber },
-//   });
-
-//   if ((await student).length == 0) {
-//     res.status(409).json({
-//       message: "You have no students \n please add a student first",
-//     });
-//   } else if (student == null) {
-//     res.status(401).json({
-//       message: "check the name and try again",
-//     });
-//   } else {
-//     // if student exists
-//     if (res.status === 200 && student) {
-//       const subject = require("../models/subjects").findOne({
-//         where: {
-//           subjectCode,
-//         },
-//       });
-//       if ((await subject).length == 0) {
-//         res.status(409).json({
-//           message: "you have no subject \n please add a subject first",
-//         });
-//       } else if (subject == null) {
-//         res.status(401).json({
-//           message: "check the subject name and try again",
-//         });
-//       } else {
-//         try {
-//             student.addSubject(subject);
-//         } catch (error) {
-//           res.status(500).json(error);
-//         }
-//       }
-
-//     }
-//   }
-// };
+};
