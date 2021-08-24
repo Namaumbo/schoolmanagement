@@ -16,7 +16,7 @@ const router= express.Router();
         // // studnet info
         router.get('/get-student-info/:id',student.getAStudent)
         // // adding subject to students
-        router.post('/:id/add-subjects',student.add_subject_to_student)
+        router.put('/:id/add-subjects',student.add_subject_to_student)
 
 
 module.exports = router

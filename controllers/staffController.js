@@ -35,15 +35,7 @@ exports.addStaff = async (req, res, next) => {
                 "staff": existenceStaff
             })
         } else {
-            const staff = await require("../models/staffs.js").create({
-                firstName,
-                lastName,
-                gender,
-                email,
-                dateOfBirth,
-                phoneNumber,
-                password
-            })
+            const staff = await require("../models/staffs.js").create(req.body)
             res.status(201).json({
                 "message": "staff added successfully",
                 "details": staff
@@ -158,5 +150,9 @@ exports.deleteAStaff = (req, res, next) => {
             "message": "Ops where is an error"
         })
     })
+
+}
+
+exports.loginAStaff = (req,res,next)=>{
 
 }

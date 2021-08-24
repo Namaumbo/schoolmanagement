@@ -37,7 +37,6 @@ module.exports = {
        isRegisteredStudent:{
         type:DataTypes.BOOLEAN,
         allowNull:false,
-        defaultValue:false
       },
        address:{
          type:DataTypes.STRING,

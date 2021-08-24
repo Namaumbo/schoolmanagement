@@ -46,7 +46,7 @@ exports.getAStudent = (req, res, next) => {
 
   const aStudent = Stundent.findOne({
      where:{id} ,
-    attributes: ["id","firstName","lastName"],
+    attributes: ["id","firstName","lastName","isRegisteredStudent"],
     include:{
       model: Subject,
       attributes: ["subjectId","subjectName","subjectCode",]
@@ -65,16 +65,7 @@ exports.getAStudent = (req, res, next) => {
         });
       }
 
-      let sub = []
-    //  response.student.subjects.forEach(subject =>{
-    //   const subs  = {
-    //      subjectId : subject.subjectId,
-    //      subjectName : subject.subjectName,
-    //      subjectCode : subject.subjectCode,
-    //   }
-    //   sub.push(subs)
-    //  });
-    let subArray = []
+      let subArray = []
     response.subjects.forEach(subject =>{
       const sub = {
         subId : subject.subjectId,
@@ -88,6 +79,7 @@ exports.getAStudent = (req, res, next) => {
       id:response.id,
       firstName : response.firstName,
       lastName : response.lastName,
+      isRegisteredStudent : response.isRegisteredStudent,
       subjects : subArray
     }
   
@@ -107,10 +99,6 @@ exports.addStudent = async (req, res) => {
   const {
     firstName,
     lastName,
-    sex,
-    dateOfBirth,
-    address,
-    isRegisteredStudent,
   } = req.body;
 
   //checking existsense and saving
@@ -160,7 +148,7 @@ exports.updateAStudent = (req, res, next) => {
           message: "student updated successfully",
         });
       } else {
-        res.status(400).json({
+        res.status(404).json({
           message: "no such student",
         });
       }
@@ -218,10 +206,11 @@ exports.add_subject_to_student = async (req, res) => {
         where: { subjectCode:req.body.subjectCode },
       });
       if (foundSubject) {
-        await aStudent.addSubject(foundSubject);
-        res.send("done")
+        const registeredStudent = Object.assign(aStudent,{isRegisteredStudent:true})
+        await registeredStudent.addSubject(foundSubject);
+        res.send("successfully save a student");
       } else {
-      res.send()
+      res.send("there was an error").status(500)
       }
 };
 };
