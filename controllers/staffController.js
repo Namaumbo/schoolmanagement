@@ -162,7 +162,7 @@ exports.deleteAStaff = (req, res, ) => {
     });
 };
 
-exports.loginAStaff = async (req, res, token) => {
+exports.loginAStaff = async (req, res) => {
   const { email, password } = req.body;
 
   const staff = await Staff.findOne({ where: { email } });
