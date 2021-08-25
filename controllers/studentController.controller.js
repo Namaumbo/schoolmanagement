@@ -3,8 +3,8 @@ const { response } = require("express");
 const { boolean } = require("joi");
 const { Op, where, json } = require("sequelize");
 
-const Stundent = require("../models/students");
-const Subject = require("../models/subjects");
+const Stundent = require("../models/students.model");
+const Subject = require("../models/subjects.model");
 
 // getting all students
 exports.getAllStudents = async (req, res) => {
