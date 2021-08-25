@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 const { DataTypes } = require("sequelize");
 const connection = require("../dbConnection");
-const subjects = require("../models/subjects");
+const subjects = require("./subjects.model");
 const performance = require("../models/perfomance");
 
 const student = connection.define(

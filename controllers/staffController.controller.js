@@ -2,7 +2,7 @@
 
 const { response } = require("express");
 const bcrypt = require("bcrypt");
-const Staff = require("../models/staffs.js");
+const Staff = require("../models/staffs.model.js");
 
 const jwt = require("jsonwebtoken");
 
@@ -21,7 +21,7 @@ exports.addStaff = async (req, res, next) => {
 
   try {
     //check for existence
-    const existenceStaff = await require("../models/staffs").findOne({
+    const existenceStaff = await require("../models/staffs.model").findOne({
       where: {
         email,
         firstName,
@@ -60,7 +60,7 @@ exports.addStaff = async (req, res, next) => {
 
 // getting all the staffs
 exports.getAllStaffs = async (req, res, next) => {
-  const allStaffs = require("../models/staffs").findAll({
+  const allStaffs = require("../models/staffs.model").findAll({
     attributes: [
       "firstName",
       "lastName",
@@ -136,7 +136,7 @@ exports.updateAStaff = (req, res, next) => {
 
 exports.deleteAStaff = (req, res, ) => {
   const id = req.params.id;
-  const deleteStaff = require("../models/staffs").destroy({
+  const deleteStaff = require("../models/staffs.model").destroy({
     where: {
       id,
     },

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const staffs = require("../controllers/staffController");
+const staffs = require("../controllers/staffController.controller");
 const {genereteToken , verifyToken}= require("../middlewares/authMiddleware.middleware");
 // staff router
 router.get("/", staffs.getAllStaffs);

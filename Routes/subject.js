@@ -1,7 +1,7 @@
 const express = require('express');
 
 
-const subject = require('../controllers/subjectController')
+const subject = require('../controllers/subjectController.controller')
 
 const router= express.Router();
         // subject router
